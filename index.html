@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Palavras + Cronômetro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e6f7f5; /* verde-água pastel */
+      color: #333; /* cinza escuro */
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #9b59b6; /* roxo pastel */
+    }
+
+    button {
+      background: #f7c5d8; /* rosa pastel */
+      border: none;
+      padding: 12px 25px;
+      margin: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #e3a9c3;
+    }
+
+    #palavra {
+      font-size: 28px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #6c3483; /* roxo mais forte */
+    }
+
+    #timer {
+      font-size: 32px;
+      margin: 20px 0;
+      color: #e84393; /* rosa forte */
+    }
+
+    .container {
+      background: #dcd6f7; /* lilás pastel */
+      border-radius: 15px;
+      padding: 30px;
+      display: inline-block;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌸 Gerador de Palavras + Cronômetro ⏳</h1>
+    
+    <button onclick="gerarPalavra()">Gerar Palavra</button>
+    <div id="palavra">Clique para gerar uma palavra!</div>
+    
+    <button onclick="iniciarTimer()">Iniciar Cronômetro (5 min)</button>
+    <div id="timer">05:00</div>
+    
+    <!-- Som de alerta -->
+    <audio id="alarme" src="https://www.soundjay.com/buttons/sounds/beep-07.mp3" preload="auto"></audio>
+  </div>
+
+  <script>
+    const palavras = [
+      // Animais
+      "gato", "cachorro", "elefante", "girafa", "tigre", "leão", "urso", "zebra", 
+      "golfinho", "baleia", "tubarão", "águia", "coruja", "pinguim", "lobo",
+      "macaco", "panda", "cavalo", "camaleão", "peixe dourado",
+
+      // Plantas / flores / fungos
+      "rosa", "margarida", "girassol", "orquídea", "lírio", "tulipa", 
+      "cacto", "samambaia", "musgo", "cogumelo", "erva-doce", "hortelã", 
+
+      // Comidas / doces
+      "bolo de chocolate", "bolo de morango", "biscoito de aveia", "pizza", 
+      "hambúrguer", "sushi", "lasanha", "brigadeiro", "coxinha", "pastel", 
+      "croissant", "panqueca", "brownie", "torta de limão", "pão de queijo", 
+
+      // Objetos
+      "relógio", "lápis", "caneta", "caderno", "livro", "óculos", "cadeira", 
+      "mesa", "computador", "celular", "chave", "guarda-chuva", "mochila", 
+      "garrafa", "xícara", "colher", "faca", "garfo", "prato", "sofá", 
+
+      // Outros
+      "carro", "bicicleta", "avião", "barco", "trem", "bola de futebol", 
+      "violão", "guitarra", "piano", "bateria", "microfone", "televisão", 
+      "câmera fotográfica", "abajur", "ventilador", "travesseiro", "cobertor"
+    ];
+
+    function gerarPalavra() {
+      const palavra = palavras[Math.floor(Math.random() * palavras.length)];
+      document.getElementById("palavra").textContent = palavra;
+    }
+
+    let tempo = 300; // 5 minutos em segundos
+    let intervalo;
+
+    function iniciarTimer() {
+      clearInterval(intervalo);
+      tempo = 300;
+      atualizarDisplay();
+      intervalo = setInterval(() => {
+        tempo--;
+        atualizarDisplay();
+        if (tempo <= 0) {
+          clearInterval(intervalo);
+          document.getElementById("alarme").play();
+          alert("⏰ Tempo acabou!");
+        }
+      }, 1000);
+    }
+
+    function atualizarDisplay() {
+      const minutos = String(Math.floor(tempo / 60)).padStart(2, '0');
+      const segundos = String(tempo % 60).padStart(2, '0');
+      document.getElementById("timer").textContent = `${minutos}:${segundos}`;
+    }
+  </script>
+</body>
+</html>
