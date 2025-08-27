@@ -1,0 +1,6 @@
+@media (max-width: 414px) {
+  .container {
+    position: absolute;
+    top: 50%;
+  }
+}
